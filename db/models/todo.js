@@ -30,7 +30,23 @@ var saveTodo = (req, res) => {
          res.status(400).send(err);
      });
 }
+
+var getAllTodos = (req, res) => {
+    Todo.find()
+        .then((todos) => {
+            res.json({
+                message: "Fetched all todos",
+                status: "OK",
+                todos
+            });
+        })
+        .catch((err) => {
+            res.status(400).send(err);
+        });
+}
+
 module.exports = {
     Todo,
-    saveTodo
+    saveTodo,
+    getAllTodos
 }

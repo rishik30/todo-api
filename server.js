@@ -3,12 +3,15 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('./db/mongoose');
 var saveTodo = require('./db/models/todo').saveTodo;
+var getAllTodos = require('./db/models/todo').getAllTodos;
 var User = require('./db/models/user').User;
 
 var app = express();
 app.use(bodyParser.json());
 
 app.post('/todoapi/todo', saveTodo);
+
+app.get('/todoapi/todo', getAllTodos);
 
 app.listen(3000, () => {
     console.log('Up and running on port 3000!');

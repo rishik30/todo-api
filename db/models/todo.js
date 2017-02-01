@@ -27,9 +27,10 @@ var saveTodo = (req, res) => {
          res.send(doc);
      })
      .catch((err) => {
-         res.send(err);
+         res.status(400).send(err);
      });
 }
 module.exports = {
+    Todo,
     saveTodo
 }

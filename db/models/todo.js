@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var ObjectID = require('mongodb').ObjectID;
 
 var Todo = mongoose.model('Todo', {
     text: {
@@ -45,8 +46,22 @@ var getAllTodos = (req, res) => {
         });
 }
 
+var getATodo = (req, res) => {
+    if(!ObjectID.isValid(req.params.id)) return res.status(404).send('ID is invalid.');
+
+    Todo.findById(req.params.id)
+        .then((todo) => {
+            if(!todo) return res.status(404).send(`Todo with ID: ${req.params.id} not found`);
+            res.send(todo);
+        })
+        .catch((err) => {
+            res.status(400).send();
+        });
+}
+
 module.exports = {
     Todo,
     saveTodo,
-    getAllTodos
+    getAllTodos,
+    getATodo
 }

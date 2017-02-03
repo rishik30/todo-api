@@ -59,9 +59,21 @@ var getATodo = (req, res) => {
         });
 }
 
+var deleteTodo = (req, res) => {
+    if(!ObjectID.isValid(req.params.id)) return res.status(404).send('ID is invalid.');
+
+    Todo.findByIdAndRemove(req.params.id)
+        .then((todo) => {
+            if(!todo) return res.status(400).send('Todo to delete not found!');
+            res.status(200).end(`Todo deleted \n${todo}`);
+        })
+        .catch(err => res.status(404).send());
+}
+
 module.exports = {
     Todo,
     saveTodo,
     getAllTodos,
-    getATodo
+    getATodo,
+    deleteTodo
 }
